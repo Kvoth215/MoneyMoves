@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money Moves — PA Financial Literacy</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f7f2;color:#1a1a1a;min-height:100vh}
+#root{max-width:860px;margin:0 auto;padding:24px 16px}
+
+/* screens */
+.screen{animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* typography */
+.app-logo{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#639922;margin-bottom:28px}
+.hero-title{font-size:32px;font-weight:700;line-height:1.25;margin-bottom:8px;color:#1a1a1a}
+.hero-sub{font-size:16px;color:#555;margin-bottom:28px;line-height:1.6}
+.section-title{font-size:20px;font-weight:700;margin-bottom:6px}
+
+/* buttons */
+button{cursor:pointer;font-family:inherit;font-size:15px;border:none;transition:all .15s}
+.btn{padding:11px 22px;border-radius:8px;font-weight:600}
+.btn-primary{background:#3B6D11;color:#fff}
+.btn-primary:hover{background:#27500A}
+.btn-primary:disabled{background:#9bbf76;cursor:not-allowed}
+.btn-secondary{background:#fff;color:#1a1a1a;border:1.5px solid #ddd}
+.btn-secondary:hover{background:#f0f4eb;border-color:#639922}
+.btn-sm{padding:8px 16px;font-size:13px}
+
+/* inputs */
+input[type=text]{font-family:inherit;font-size:16px;padding:11px 14px;border:1.5px solid #ddd;border-radius:8px;outline:none;width:100%;background:#fff;color:#1a1a1a}
+input[type=text]:focus{border-color:#639922;box-shadow:0 0 0 3px rgba(99,153,34,.15)}
+
+/* cards */
+.card{background:#fff;border-radius:12px;border:1.5px solid #e8ede0;padding:20px}
+.card-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.selectable{cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.selectable:hover{border-color:#639922;box-shadow:0 2px 8px rgba(99,153,34,.15)}
+.selectable.selected{border-color:#3B6D11;border-width:2px;background:#f0f4eb}
+
+/* difficulty badges */
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.04em;margin-bottom:10px}
+.badge-green{background:#d4edaa;color:#27500A}
+.badge-amber{background:#fde9b0;color:#7a4f00}
+.badge-coral{background:#fdd5c8;color:#7a2800}
+
+/* welcome grid */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:460px}
+.feature-item{background:#fff;border:1.5px solid #e8ede0;border-radius:10px;padding:16px;text-align:center}
+.feature-icon{font-size:26px;margin-bottom:8px}
+.feature-label{font-size:13px;color:#555;font-weight:500}
+
+/* scenario cards */
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.scenario-card{background:#fff;border:1.5px solid #e8ede0;border-radius:12px;padding:18px;cursor:pointer;transition:all .15s}
+.scenario-card:hover{border-color:#639922;box-shadow:0 3px 12px rgba(99,153,34,.18);transform:translateY(-2px)}
+.scenario-icon{font-size:30px;display:block;margin-bottom:10px}
+.scenario-title{font-size:14px;font-weight:700;margin-bottom:5px}
+.scenario-desc{font-size:12px;color:#666;line-height:1.5}
+.scenario-tag{font-size:11px;color:#639922;font-weight:600;margin-top:8px}
+
+/* game layout */
+.game-wrap{display:grid;grid-template-columns:1fr 210px;gap:16px;align-items:start}
+.game-main{display:flex;flex-direction:column;gap:14px}
+.game-sidebar{display:flex;flex-direction:column;gap:12px}
+
+/* narrative card */
+.week-pill{display:inline-flex;align-items:center;gap:6px;background:#e8f0d8;color:#3B6D11;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;margin-bottom:14px}
+.narrative-text{font-size:15px;line-height:1.75;color:#1a1a1a;margin-bottom:12px}
+.situation-box{background:#f5f7f2;border-left:3px solid #639922;border-radius:0 8px 8px 0;padding:12px 14px;font-size:14px;font-weight:600;color:#333;margin-bottom:16px;line-height:1.5}
+.result-banner{background:#e8f5d0;border:1.5px solid #b5d87a;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#27500A;line-height:1.5}
+.result-banner strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;color:#3B6D11}
+
+/* choices */
+.choices{display:flex;flex-direction:column;gap:9px}
+.choice-btn{background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:13px 15px;text-align:left;transition:all .15s;line-height:1.5}
+.choice-btn:hover{border-color:#639922;background:#f5f9ee;transform:translateX(3px)}
+.choice-btn:active{transform:scale(.99)}
+.choice-letter{display:inline-block;width:22px;height:22px;background:#3B6D11;color:#fff;border-radius:50%;font-size:12px;font-weight:700;text-align:center;line-height:22px;margin-right:10px;flex-shrink:0}
+.choice-row{display:flex;align-items:flex-start;gap:0}
+.choice-impact{font-size:12px;color:#666;margin-top:5px;margin-left:32px}
+.impact-earn{color:#27500A;font-weight:600}
+.impact-spend{color:#993C1D;font-weight:600}
+
+/* stats sidebar */
+.stat-card{background:#fff;border:1.5px solid #e8ede0;border-radius:10px;padding:14px}
+.stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px}
+.stat-value{font-size:24px;font-weight:700}
+.val-green{color:#27500A}
+.val-red{color:#cc3300}
+.tip-card{background:#fffbf0;border:1.5px solid #f5d87a;border-radius:10px;padding:14px}
+.tip-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7a5c00;margin-bottom:6px}
+.tip-text{font-size:12px;color:#5a4400;line-height:1.6}
+.std-label{font-size:11px;color:#aaa;padding:6px 0}
+
+/* progress */
+.progress-wrap{margin-bottom:18px}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px;font-weight:600}
+.progress-track{height:6px;background:#e0e8d0;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#639922,#3B6D11);border-radius:3px;transition:width .5s ease}
+
+/* tab bar */
+.tab-bar{display:flex;gap:8px;margin-bottom:18px}
+.tab-btn{background:none;border:1.5px solid #ddd;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:600;color:#666}
+.tab-btn.active{background:#3B6D11;color:#fff;border-color:#3B6D11}
+.tab-btn:hover:not(.active){border-color:#639922;color:#3B6D11}
+
+/* spreadsheet */
+.sheet-wrap{overflow-x:auto}
+.sheet-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.sheet-table th{background:#f0f4eb;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#3B6D11;border-bottom:2px solid #c8dba0}
+.sheet-table td{padding:9px 12px;border-bottom:1px solid #eef2e8}
+.sheet-table tr:last-child td{border-bottom:none}
+.sheet-table tr:hover td{background:#fafcf7}
+.sheet-table .total-row td{background:#f0f4eb;font-weight:700;border-top:2px solid #c8dba0}
+.cell-earn{color:#27500A;font-weight:600}
+.cell-spend{color:#cc3300;font-weight:600}
+.cell-bal-pos{color:#27500A;font-weight:700}
+.cell-bal-neg{color:#cc3300;font-weight:700}
+.wk-label{font-size:11px;color:#888;font-weight:600}
+.sheet-tip{font-size:12px;color:#666;margin-top:12px;font-style:italic}
+.net-box{display:inline-block;padding:6px 14px;border-radius:6px;font-size:14px;font-weight:700;margin-top:12px}
+.net-pos{background:#e8f5d0;color:#27500A}
+.net-neg{background:#fde8e0;color:#cc3300}
+
+/* summary */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.summary-stat{background:#fff;border:1.5px solid #e8ede0;border-radius:10px;padding:16px}
+.summary-num{font-size:28px;font-weight:700;margin-top:6px}
+.history-list{display:flex;flex-direction:column;gap:0}
+.history-item{padding:10px 0;border-bottom:1px solid #eef2e8;font-size:13px;display:flex;align-items:baseline;gap:10px}
+.history-wk{font-size:11px;font-weight:700;color:#639922;min-width:50px}
+.history-choice{color:#333;line-height:1.5}
+.outcome-msg{background:#e8f5d0;border:1.5px solid #b5d87a;border-radius:10px;padding:16px 18px;margin:16px 0;font-size:15px;color:#27500A;line-height:1.6}
+.outcome-msg.loss{background:#fde8e0;border-color:#f5b5a0;color:#993C1D}
+.action-row{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+
+/* nav */
+.nav-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.back-btn{background:none;border:none;font-size:13px;color:#888;font-weight:600;padding:0;display:flex;align-items:center;gap:4px}
+.back-btn:hover{color:#3B6D11}
+.screen-title{font-size:20px;font-weight:700}
+
+/* loading */
+.loading-wrap{display:flex;align-items:center;gap:10px;padding:20px 0;color:#888;font-size:14px}
+.spin{width:18px;height:18px;border:2px solid #e0e8d0;border-top-color:#639922;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* responsive */
+@media(max-width:640px){
+  .card-grid-3,.scenario-grid,.diff-grid{grid-template-columns:1fr 1fr}
+  .game-wrap{grid-template-columns:1fr}
+  .game-sidebar{display:grid;grid-template-columns:repeat(2,1fr)}
+  .summary-grid{grid-template-columns:repeat(2,1fr)}
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+const {useState} = React;
+
+/* =====================================================================
+   SCENARIO DATA — All pre-written, no API required
+   PA Standards: 17.1–17.6 (effective July 1, 2026)
+   ===================================================================== */
+
+const SCENARIOS = [
+{
+  id:'lemonade', title:'Lemonade Stand', icon:'🍋',
+  description:'Start a neighborhood business and manage income, expenses, and tough decisions.',
+  startBalance:20, paAreas:'17.2 · 17.3',
+  weeks:[
+    { week:1,
+      narrative:"It's the hottest week of summer! Your neighbor Mrs. Chen is selling a big bag of lemons cheap, and your parents gave you the green light to set up a lemonade stand on the corner. You have $20 to start your business.",
+      situation:"You need supplies to open your stand. How much will you spend to get started?",
+      paStandard:'17.3.3-5.D', tip:"Keeping startup costs low means you reach profit faster — spend only what you truly need.",
+      choices:[
+        {text:"Buy the basics — lemons, sugar, paper cups, and a handmade sign ($8)",
+         impact:{income:0,expense:8,description:"Bought basic supplies"},
+         consequence:"Smart and lean! Your setup looks friendly and inviting. Low startup costs mean you need to sell fewer cups before you make a profit."},
+        {text:"Go big — fancy pitcher, matching cups, printed banner, and premium ingredients ($18)",
+         impact:{income:0,expense:18,description:"Bought premium supplies"},
+         consequence:"Your stand looks amazing! But you've spent most of your starting money. You'll need solid sales just to break even this week."},
+        {text:"Use stuff from home and spend as little as possible ($3)",
+         impact:{income:0,expense:3,description:"Used household supplies"},
+         consequence:"You stretched every dollar! The stand looks a little scrappy, but it works — and you have almost all your startup money still in hand."}
+      ]
+    },
+    { week:2,
+      narrative:"Day one is here! Neighbors and kids are passing by on their way to the park. Your first customer, sweaty Mr. Alvarez from down the block, walks over with his wallet out.",
+      situation:"You need to decide: what is the right price to charge per cup of lemonade?",
+      paStandard:'17.2.3-5.G', tip:"The right price covers your costs and attracts customers. Too high = fewer sales. Too low = too little profit.",
+      choices:[
+        {text:"Charge $1.00 per cup — affordable and fair for the neighborhood",
+         impact:{income:20,expense:0,description:"Sold 20 cups at $1.00"},
+         consequence:"Perfect pricing! You sold 20 cups on your first day. Word spread fast and customers kept returning. Profit is building up nicely."},
+        {text:"Charge $2.50 per cup — lemonade this good is worth it",
+         impact:{income:10,expense:0,description:"Sold 4 cups at $2.50"},
+         consequence:"Most neighbors thought $2.50 was too steep. Only 4 cups sold — even at a higher price, fewer sales can mean less total money."},
+        {text:"Charge $0.50 per cup — cheap prices bring more customers",
+         impact:{income:15,expense:0,description:"Sold 30 cups at $0.50"},
+         consequence:"Tons of customers! You sold 30 cups — but $0.50 each barely covers your costs. High volume doesn't always mean high profit."}
+      ]
+    },
+    { week:3,
+      narrative:"Business is going well — then you check the weekend forecast. A thunderstorm is coming Saturday, your busiest day. You've already bought fresh lemons and supplies.",
+      situation:"The storm will wipe out your outdoor sales. What's your plan?",
+      paStandard:'17.5.3-5.A', tip:"Unexpected events happen to every business. Smart owners have a backup plan ready before they need it.",
+      choices:[
+        {text:"Move your stand under a covered porch and stay open through the rain",
+         impact:{income:12,expense:2,description:"Adapted setup, sold in rain"},
+         consequence:"Resourceful thinking! Fewer customers came, but you stayed open and still made sales. You didn't let the weather beat you."},
+        {text:"Close for the day and save your supplies for next week",
+         impact:{income:0,expense:0,description:"Closed — saved supplies"},
+         consequence:"No income today, but your supplies are perfectly preserved. Sometimes protecting your resources is the smarter move."},
+        {text:"Text neighbors to offer front-door lemonade delivery for $1.50 per cup",
+         impact:{income:18,expense:3,description:"Delivered lemonade to neighbors"},
+         consequence:"Creative pivot! Neighbors loved the delivery idea. You turned a bad weather day into a brand new service — and earned more than a normal day!"}
+      ]
+    },
+    { week:4,
+      narrative:"Uh oh. Your neighbor Jordan just opened their own lemonade stand two houses away. They're charging $0.75 a cup, have a big colorful umbrella, and are playing upbeat music.",
+      situation:"A competitor just showed up. How do you respond?",
+      paStandard:'17.3.6-8.A', tip:"Competition is normal in business. Often improving your product or service beats just lowering your price.",
+      choices:[
+        {text:"Match Jordan's $0.75 price and add a free cookie with every cup",
+         impact:{income:15,expense:5,description:"Matched price, added cookie deal"},
+         consequence:"The cookie combo was a huge hit! Loyal customers stayed and new ones came specifically for the deal. Smart competitive thinking."},
+        {text:"Keep your price and trust that your loyal customers will stick with you",
+         impact:{income:8,expense:0,description:"Kept original pricing"},
+         consequence:"Some customers stayed loyal — but others drifted to Jordan's lower price. Competition is real and can quietly chip away at sales."},
+        {text:"Walk over and propose that you and Jordan team up instead of compete",
+         impact:{income:20,expense:0,description:"Partnered with Jordan"},
+         consequence:"Brilliant! You split the block and sent customers to each other. Both stands thrived working together — cooperation can beat competition."}
+      ]
+    },
+    { week:5,
+      narrative:"You've been running the stand for a month and built up real earnings. School starts in three weeks. It's time to think about what happens to the money you've made.",
+      situation:"The summer is ending — what do you do with your earnings?",
+      paStandard:'17.4.3-5.B', tip:"A good habit is to divide any money you earn: some to save, some to spend, and some to reinvest or give.",
+      choices:[
+        {text:"Save 75% in a jar labeled for next summer, spend 25% on something you want",
+         impact:{income:0,expense:0,description:"Saved most, spent a little"},
+         consequence:"Great balance! You rewarded yourself AND kept most of your earnings for later. Financial experts call this 'paying yourself first.'"},
+        {text:"Reinvest everything back into supplies, a sign, and savings for next summer's launch",
+         impact:{income:0,expense:12,description:"Reinvested in future business"},
+         consequence:"Long-term thinking! You gave up short-term spending for a big head start next summer. That takes real discipline and patience."},
+        {text:"You earned it — spend most of it on things you've been wanting all summer",
+         impact:{income:0,expense:22,description:"Spent most of earnings"},
+         consequence:"You had a fantastic week! But spending most of what you earned means starting from near zero next time. Treating yourself is fine — just not all at once."}
+      ]
+    },
+    { week:6,
+      narrative:"The last day of summer is here. You're putting away the pitcher, counting your final balance, and looking back at the wild ride of running your very first business.",
+      situation:"You made it through a whole season! What's your final move?",
+      paStandard:'17.1.6-8.A', tip:"Reflecting on decisions — what worked, what didn't — makes you smarter about money every single time.",
+      choices:[
+        {text:"Write down everything you learned this summer and what you'd do differently",
+         impact:{income:5,expense:0,description:"Late customer paid! +$5 bonus"},
+         consequence:"This is exactly what successful business owners do — reflect, document, and improve. A customer who owed you money also paid up today!"},
+        {text:"Tell your three best friends about the experience and invite them to go bigger together next summer",
+         impact:{income:0,expense:0,description:"Planned for the future"},
+         consequence:"Sharing experience builds teams. A bigger crew next summer could mean more customers, more stands, and much more profit."},
+        {text:"Pack up every supply neatly so everything is ready to go the moment summer starts again",
+         impact:{income:0,expense:0,description:"Organized for next season"},
+         consequence:"Organization is underrated! Everything in good condition means zero waste and zero extra costs when you launch again. Smart."}
+      ]
+    }
+  ]
+},
+
+{
+  id:'babysitting', title:'Babysitting Business', icon:'👶',
+  description:'Build a client list, set your rate, and handle the real challenges of a service job.',
+  startBalance:15, paAreas:'17.2 · 17.3 · 17.5',
+  weeks:[
+    { week:1,
+      narrative:"You've decided to start babysitting in your neighborhood. You're responsible, great with kids, and your parents support the idea. The Martinez family next door needs a sitter this Friday. They asked you what your rate is — and you need an answer.",
+      situation:"How much will you charge per hour to babysit?",
+      paStandard:'17.2.6-8.A', tip:"Research what others charge before setting your rate. Too low undervalues your time; too high loses clients.",
+      choices:[
+        {text:"Charge $12 per hour — a fair market rate for your area",
+         impact:{income:24,expense:0,description:"Babysat 2 hours at $12/hr"},
+         consequence:"Great research! $12/hr is competitive and the Martinez family was happy to pay it. They already asked you back for next week."},
+        {text:"Charge $6 per hour — start low to get clients first",
+         impact:{income:12,expense:0,description:"Babysat 2 hours at $6/hr"},
+         consequence:"You got the job, but $6/hr is well below market rate. You worked hard for less than you deserved. Clients may also expect that price forever."},
+        {text:"Charge $18 per hour — you're worth it",
+         impact:{income:18,expense:0,description:"Babysat 2 hours at $18/hr"},
+         consequence:"Bold price! The family hesitated but agreed since you come highly recommended. You earned well — but some families may shop around at that rate."}
+      ]
+    },
+    { week:2,
+      narrative:"Word spreads fast. Two families want you this Saturday — the Garcias at 5pm and the Nguyens at 6pm. The jobs overlap by two hours and you can only take one.",
+      situation:"You can only take one job. Which do you choose and how do you handle the other family?",
+      paStandard:'17.1.6-8.B', tip:"Every decision has an opportunity cost — choosing one option means giving up the benefits of another.",
+      choices:[
+        {text:"Take the Garcia job (booked first) and politely recommend your reliable friend to the Nguyens",
+         impact:{income:24,expense:0,description:"Babysat Garcias, referred Nguyens"},
+         consequence:"Professional and fair! The Garcias appreciated that you honored the first commitment. The Nguyens respected your referral and remember you positively."},
+        {text:"Take the Nguyen job because they offered $2/hr more",
+         impact:{income:28,expense:0,description:"Chose higher-paying job"},
+         consequence:"You earned more tonight — but the Garcias were disappointed and may not call again. Reputation is worth more than a $4 difference."},
+        {text:"Try to split your time and do both — 1 hour at each house",
+         impact:{income:14,expense:0,description:"Split between two jobs"},
+         consequence:"Both families felt shortchanged and neither paid the full rate. Trying to do both poorly is often worse than doing one thing well."}
+      ]
+    },
+    { week:3,
+      narrative:"While babysitting the Johnsons' kids, one of them accidentally knocks over and breaks a small decorative lamp. The family comes home and notices right away.",
+      situation:"A child you were watching broke something. What do you do?",
+      paStandard:'17.5.6-8.A', tip:"Accidents happen in any job. How you handle them shapes your reputation more than the accident itself.",
+      choices:[
+        {text:"Be honest right away, apologize, and offer to pay half the cost with tonight's earnings",
+         impact:{income:20,expense:8,description:"Paid partial repair — kept integrity"},
+         consequence:"The Johnsons were impressed by your honesty. They covered the rest, gave you a full tip, and said you're their permanent sitter. Trust is priceless."},
+        {text:"Tell the Johnsons what happened but explain the kids caused it and it's not your responsibility",
+         impact:{income:20,expense:0,description:"Declined responsibility"},
+         consequence:"Technically the kids did it — but you were in charge. The Johnsons were unhappy with how you handled it and didn't call you again."},
+        {text:"Say nothing and hope they don't notice right away",
+         impact:{income:20,expense:0,description:"Said nothing about the lamp"},
+         consequence:"They noticed immediately. Being caught not telling the truth was far worse than the broken lamp. You lost that client permanently."}
+      ]
+    },
+    { week:4,
+      narrative:"Business is booming — you've got 4 regular families now. But your phone's battery is dying fast and you're unreachable during jobs. Clients are getting frustrated they can't reach you.",
+      situation:"You need a reliable phone for work. How do you handle it?",
+      paStandard:'17.3.6-8.A', tip:"Reliable tools are part of the cost of running a service business. Sometimes spending on the right thing earns you more.",
+      choices:[
+        {text:"Buy a portable charger ($22) so your phone stays charged on every job",
+         impact:{income:0,expense:22,description:"Bought portable charger"},
+         consequence:"Problem solved! Families can always reach you. One client even gave you an extra job specifically because you're always reachable. Investment paid off."},
+        {text:"Ask a parent to get a new phone — you'll pay them back from earnings",
+         impact:{income:0,expense:0,description:"Borrowed against future earnings"},
+         consequence:"Your parents agreed and fronted the money. Now you owe them from future jobs. Borrowing is okay — but it commits your future earnings."},
+        {text:"Carry a portable charger from home each time and make sure you charge between jobs",
+         impact:{income:0,expense:0,description:"Used existing resources"},
+         consequence:"Creative use of what you already have! No cost, and the problem is mostly solved — as long as you remember to charge it every time."}
+      ]
+    },
+    { week:5,
+      narrative:"You're thinking about how to grow your business. You currently rely on word-of-mouth. A friend suggests making a simple flyer to post in the neighborhood.",
+      situation:"How will you market your babysitting business?",
+      paStandard:'17.2.6-8.G', tip:"Marketing doesn't have to be expensive. Sometimes the most effective promotion costs almost nothing.",
+      choices:[
+        {text:"Design a simple flyer on your computer and post 20 copies at the library, grocery store, and community board ($2 for printing)",
+         impact:{income:15,expense:2,description:"Flyer campaign — gained new client"},
+         consequence:"A new family found your flyer and called right away! $2 in printing turned into a regular client. That's an incredible return on a small investment."},
+        {text:"Ask your current clients to refer you to their friends and offer a small thank-you discount",
+         impact:{income:12,expense:5,description:"Referral discount program"},
+         consequence:"Two clients referred friends! The discount cost you a little, but you gained two new regulars. Word-of-mouth with an incentive is powerful."},
+        {text:"Post in your neighborhood's social media group with permission from your parents",
+         impact:{income:20,expense:0,description:"Social media outreach — new clients"},
+         consequence:"Three families reached out through the online post. Zero cost, great reach. Smart use of free tools that are already available to you."}
+      ]
+    },
+    { week:6,
+      narrative:"End of the month! You've built a real little business with loyal clients and a growing reputation. Time to look at your full month of earnings and make a plan.",
+      situation:"It's the end of your first month. How do you manage your babysitting income?",
+      paStandard:'17.3.6-8.C', tip:"Tracking income and expenses — even in a simple list — helps you see what's working and where money is going.",
+      choices:[
+        {text:"Record all your earnings and expenses in a notebook or spreadsheet to see your real profit",
+         impact:{income:0,expense:0,description:"Tracked finances carefully"},
+         consequence:"Excellent habit! You discovered you're making more than you thought — and found two small expenses you can cut next month. Knowledge is power."},
+        {text:"Set aside 20% of total earnings as savings before spending anything else",
+         impact:{income:0,expense:0,description:"Followed pay-yourself-first rule"},
+         consequence:"Paying yourself first is a habit that wealthy people swear by. Even a small amount saved regularly builds up faster than you'd expect."},
+        {text:"Treat yourself to something with this month's profit — you earned it",
+         impact:{income:0,expense:20,description:"Celebrated with a purchase"},
+         consequence:"You worked hard and deserve to enjoy some of it! Just be sure to keep some aside for business costs next month — tools, supplies, and the unexpected."}
+      ]
+    }
+  ]
+},
+
+{
+  id:'lawn', title:'Lawn Mowing Service', icon:'🌿',
+  description:'Turn your weekends into income and learn what happens when equipment breaks and weather changes.',
+  startBalance:25, paAreas:'17.2 · 17.4 · 17.5',
+  weeks:[
+    { week:1,
+      narrative:"It's the beginning of spring and lawns everywhere are growing fast. You see an opportunity — your block has 12 houses and several neighbors have mentioned they'd love help with yard work. You have $25 to start.",
+      situation:"You need equipment. What's your strategy for getting started?",
+      paStandard:'17.3.3-5.D', tip:"Before buying equipment, check what you can borrow. Keeping startup costs low lets you become profitable faster.",
+      choices:[
+        {text:"Borrow your family's mower and use your $25 only on gas and a few bags ($10)",
+         impact:{income:0,expense:10,description:"Borrowed mower, bought supplies"},
+         consequence:"Smart move! Low startup costs mean every job is almost pure profit. You have $15 left as a safety net if anything goes wrong."},
+        {text:"Buy a used mower from a neighbor for $40 so you own your own equipment",
+         impact:{income:0,expense:40,description:"Bought used mower"},
+         consequence:"You spent more than you had — you'll need to borrow $15. But now you own your own mower and aren't dependent on anyone else's schedule."},
+        {text:"Start with just a rake and weed trimmer for small jobs ($15)",
+         impact:{income:0,expense:15,description:"Started with basic tools"},
+         consequence:"Smart and low-risk! You can do cleanup jobs right away without a mower. Less income per job, but you're in business with very little risk."}
+      ]
+    },
+    { week:2,
+      narrative:"You're ready to work! Three neighbors said they're interested. Now you need to set a price. One neighbor asked, 'So what do you charge?' and you need a confident answer.",
+      situation:"What will you charge to mow a standard yard?",
+      paStandard:'17.2.6-8.A', tip:"Research local rates before answering. Professionals often charge $30–50 for a standard yard. Students usually start a bit lower.",
+      choices:[
+        {text:"Charge $25 per yard — competitive and still great for a student",
+         impact:{income:50,expense:5,description:"Mowed 2 yards at $25 each"},
+         consequence:"Great price point! Both neighbors said yes immediately. You mowed two yards this weekend and earned $50 before gas. A solid start!"},
+        {text:"Charge $15 per yard — keep it cheap to get more lawns",
+         impact:{income:45,expense:5,description:"Mowed 3 yards at $15 each"},
+         consequence:"You got three clients at $15 — but after gas, you made very little per hour. Low prices can attract business but hurt your bottom line."},
+        {text:"Charge $35 per yard — professional quality, professional price",
+         impact:{income:35,expense:5,description:"Mowed 1 yard at $35"},
+         consequence:"One neighbor agreed at $35; the others thought it was high for a student. You earned well but reached fewer clients. Quality justifies price — sometimes."}
+      ]
+    },
+    { week:3,
+      narrative:"Halfway through Saturday, the mower clanks, sputters — and stops. You're in the middle of the Washingtons' yard. It's broken. You have three more jobs scheduled today.",
+      situation:"Your equipment broke mid-job. What do you do?",
+      paStandard:'17.5.6-8.A', tip:"Equipment failure is a real business risk. How you handle problems for clients defines your professional reputation.",
+      choices:[
+        {text:"Call the clients to explain, reschedule everyone, and use earnings to get the mower fixed ($20 repair)",
+         impact:{income:25,expense:20,description:"Completed 1 job, repaired mower"},
+         consequence:"Clients respected your honesty. The mower is repaired and ready. You lost some income today but kept every client relationship intact."},
+        {text:"Borrow a neighbor's mower to finish all four jobs today, pay them $5",
+         impact:{income:50,expense:5,description:"Borrowed mower, finished all jobs"},
+         consequence:"Problem solved creatively! Reaching out for help when you need it is a strength, not a weakness. All clients were satisfied and you kept your income."},
+        {text:"Finish the Washington job by hand with clippers and cancel the rest",
+         impact:{income:25,expense:0,description:"Finished 1 job manually"},
+         consequence:"You tried your best — but the manual job took 3 hours and the other clients were frustrated. Sometimes completing the minimum isn't enough."}
+      ]
+    },
+    { week:4,
+      narrative:"August arrives and it's brutally hot — 95°F with high humidity. You have 4 lawns scheduled this Saturday. Your clients are counting on you, but mowing in this heat feels dangerous.",
+      situation:"It's dangerously hot. What do you do about your scheduled jobs?",
+      paStandard:'17.5.6-8.B', tip:"Managing risk applies to personal safety too. No income is worth risking your health — and good clients understand that.",
+      choices:[
+        {text:"Start at 7am before the heat peaks, take breaks, and finish all 4 yards by noon",
+         impact:{income:80,expense:0,description:"Completed all jobs early morning"},
+         consequence:"Smart planning! Early morning mowing is cooler and clients loved having it done before they woke up. You finished everything safely and professionally."},
+        {text:"Text all clients to reschedule to next weekend due to heat advisory",
+         impact:{income:0,expense:0,description:"Rescheduled all jobs safely"},
+         consequence:"Your clients understood completely — one even thanked you for being safety-conscious. No income today, but you protected your health and long-term ability to work."},
+        {text:"Push through the heat and complete all 4 yards, taking short water breaks",
+         impact:{income:80,expense:0,description:"Pushed through — earned full pay"},
+         consequence:"You completed the jobs but felt awful all day. You got lucky. Heat exhaustion is a real danger. This was a risk that happened to work out — this time."}
+      ]
+    },
+    { week:5,
+      narrative:"Your business is thriving! You have 6 regular clients, solid earnings, and a great reputation. A friend asks if they can join you and you could take on 6 more yards together.",
+      situation:"Should you expand your business with a partner?",
+      paStandard:'17.4.6-8.F', tip:"Growing a business means more income but also more responsibility. Think through the costs and logistics before saying yes.",
+      choices:[
+        {text:"Say yes — split the work and the earnings 50/50 with clear written terms",
+         impact:{income:90,expense:0,description:"Expanded with partner"},
+         consequence:"Great teamwork! With two of you working, you covered twice the ground. The written agreement prevented any confusion about who gets paid what."},
+        {text:"Say no — you want to stay small and in full control of your business",
+         impact:{income:60,expense:0,description:"Kept business solo"},
+         consequence:"Staying in full control has value. You know exactly what you earn and what you're responsible for. Steady and manageable growth is a real strategy."},
+        {text:"Take on 3 more yards yourself without a partner — push for growth solo",
+         impact:{income:75,expense:0,description:"Expanded solo — 9 yards total"},
+         consequence:"You handled it — barely. 9 yards in a weekend is exhausting. Stretching yourself too thin risks quality. Growth is good, but there are limits."}
+      ]
+    },
+    { week:6,
+      narrative:"Fall is here. Leaves are falling, grass slows down, and the mowing season is winding up. You've built something real from scratch. Time to reflect on what you earned and learned.",
+      situation:"The season is over. What do you do with everything you've built?",
+      paStandard:'17.4.3-5.B', tip:"Seasonal businesses need off-season plans. Save when you earn so you have money during slow periods.",
+      choices:[
+        {text:"Save 60% of season earnings, put 20% toward a new service (leaf raking) and keep 20% to spend",
+         impact:{income:0,expense:0,description:"Smart three-way split of earnings"},
+         consequence:"Perfect financial thinking! You diversified into leaf raking to keep earning through fall, saved for winter, and rewarded yourself. That's a real business plan."},
+        {text:"Save everything from the season to cover expenses and start strong next spring",
+         impact:{income:0,expense:0,description:"Saved entire season's earnings"},
+         consequence:"Disciplined saver! You'll enter next spring with a full wallet and zero startup stress. That's rare — and powerful."},
+        {text:"Celebrate the season by spending most of your earnings — you'll rebuild next spring",
+         impact:{income:0,expense:30,description:"Spent most of seasonal earnings"},
+         consequence:"You enjoyed your rewards! Just remember — next spring you'll start closer to zero. Many seasonal workers struggle because they don't save during the busy season."}
+      ]
+    }
+  ]
+},
+
+{
+  id:'shopping', title:'Back to School Budget', icon:'🎒',
+  description:'You have $100 for school supplies. Spend it wisely across six shopping decisions.',
+  startBalance:100, paAreas:'17.3',
+  weeks:[
+    { week:1,
+      narrative:"School starts in two weeks and your parents gave you $100 for all your supplies. That needs to cover folders, notebooks, pens, a calculator, and anything else you need. You want to come in under budget if possible.",
+      situation:"What's your first step before spending a single dollar?",
+      paStandard:'17.3.6-8.A', tip:"A shopping list made before you enter a store prevents impulse buying and helps you stay on budget.",
+      choices:[
+        {text:"Write a detailed list of every item you need, estimated costs, and priorities",
+         impact:{income:0,expense:0,description:"Created shopping plan"},
+         consequence:"Excellent start! Research shows that shoppers with lists spend 23% less than those without. You're already thinking like a smart consumer."},
+        {text:"Head to the store and see what you need when you're there",
+         impact:{income:0,expense:15,description:"Impulse buys without a list"},
+         consequence:"Without a plan, you picked up several things that looked cool but weren't on any supply list. That's $15 you might not be able to get back."},
+        {text:"Ask your teachers for the official supply list before buying anything",
+         impact:{income:0,expense:0,description:"Got official list first"},
+         consequence:"Smart! You may have been about to buy things you don't need. Getting the actual list ensures every dollar is spent on something required."}
+      ]
+    },
+    { week:2,
+      narrative:"You need five subject notebooks. At the store, you see spiral notebooks: a name-brand '5-Star' version at $4.99 each, or a store-brand version that looks almost identical at $1.99 each.",
+      situation:"Five notebooks — name brand or store brand?",
+      paStandard:'17.3.6-8.B', tip:"Compare quality, not just price. Store brands are often made in the same factories as name brands — but not always.",
+      choices:[
+        {text:"Buy all 5 store-brand notebooks and save $15",
+         impact:{income:0,expense:10,description:"Bought 5 store-brand notebooks ($10)"},
+         consequence:"Great value! You got everything you needed for $10 instead of $25. The notebooks are identical inside — you'll never notice the difference in class."},
+        {text:"Buy 3 store-brand and 2 name-brand for classes where you write a lot",
+         impact:{income:0,expense:16,description:"Mixed brand strategy ($16)"},
+         consequence:"Thoughtful compromise! You saved on some while investing more where it matters. That's smart consumer decision-making — not all items deserve the same budget."},
+        {text:"Buy all 5 name-brand notebooks because you know they last longer",
+         impact:{income:0,expense:25,description:"Bought 5 name-brand notebooks ($25)"},
+         consequence:"You spent $25 on notebooks alone. They are better quality, but is the difference worth $15 extra? That's a big chunk of your total budget on one item."}
+      ]
+    },
+    { week:3,
+      narrative:"Walking through the store, you spot a massive Back to School sale — 40% off all pens, pencils, and highlighters. You need those items anyway, but the deal ends today.",
+      situation:"There's a sale on supplies you need. How do you handle it?",
+      paStandard:'17.3.3-5.A', tip:"Sales can be great savings — or psychological tricks. Only buy more than you need if you'll actually use it and you have the budget.",
+      choices:[
+        {text:"Buy exactly what you need for this year at the sale price",
+         impact:{income:0,expense:6,description:"Bought needed supplies at 40% off"},
+         consequence:"Smart! You saved 40% on things you needed anyway without overspending. That's exactly how sales should work — you save money on planned purchases."},
+        {text:"Stock up on pens and highlighters for the whole year while the price is low",
+         impact:{income:0,expense:14,description:"Stocked up at sale price"},
+         consequence:"Good thinking if you'll actually use them! Buying more of what you need at a discount is a legitimate strategy — as long as it doesn't blow your budget."},
+        {text:"Skip the sale — you'll buy supplies later and don't want to spend now",
+         impact:{income:0,expense:0,description:"Skipped the sale"},
+         consequence:"Missing a sale on things you needed means paying full price later. Patience is usually smart, but not when you know you'll definitely need something."}
+      ]
+    },
+    { week:4,
+      narrative:"Your best friend wants you to buy the same $35 backpack they bought — a popular brand everyone is carrying this year. Your current backpack still works fine.",
+      situation:"Friend pressure + a trendy backpack. What do you decide?",
+      paStandard:'17.1.6-8.C', tip:"Social pressure is one of the biggest influences on spending. Ask yourself: do I want this, or do I want others to think I have it?",
+      choices:[
+        {text:"Keep your current backpack — it works fine and you'd rather spend that $35 on other things",
+         impact:{income:0,expense:0,description:"Kept existing backpack"},
+         consequence:"Strong move! You resisted social pressure and kept $35 in your budget. That money can cover several more essential supplies. Real confidence doesn't need a label."},
+        {text:"Buy the backpack — it's important to you and you have enough budget left",
+         impact:{income:0,expense:35,description:"Bought trendy backpack"},
+         consequence:"If it genuinely matters to you and you can afford it, that's a valid choice. Just be sure you have everything else you need first and this is truly your priority."},
+        {text:"Tell your friend you'll look for the same bag at a thrift store or discount site",
+         impact:{income:0,expense:12,description:"Found similar bag at discount"},
+         consequence:"Excellent! You found a nearly identical bag for $12. You got the look your friend has, stayed social, and saved $23. Comparison shopping works beautifully."}
+      ]
+    },
+    { week:5,
+      narrative:"First week of school — and your Algebra teacher announces that a graphing calculator is required for the class. It wasn't on the original list. A good one costs $50 at the school store.",
+      situation:"You need a $50 calculator. How do you get it?",
+      paStandard:'17.3.6-8.A', tip:"Before buying anything at a school store, check other options. The same item is almost always cheaper elsewhere.",
+      choices:[
+        {text:"Check if a sibling, neighbor, or classmate has last year's model you can borrow long-term",
+         impact:{income:0,expense:0,description:"Borrowed calculator — free!"},
+         consequence:"Score! A neighbor's older sibling had the exact model and was happy to loan it for the year. Zero cost. Always ask around before spending."},
+        {text:"Search online for the same calculator — find a used one for $22",
+         impact:{income:0,expense:22,description:"Bought used calculator online"},
+         consequence:"Smart shopping! You saved $28 by checking an online marketplace. The calculator works identically to a new one. Used often means huge savings."},
+        {text:"Buy it at the school store right away to have it before tomorrow's class",
+         impact:{income:0,expense:50,description:"Bought at school store — full price"},
+         consequence:"You have it for tomorrow — but you paid the highest possible price. The same calculator was available for less elsewhere. Convenience costs money."}
+      ]
+    },
+    { week:6,
+      narrative:"You've bought everything on your list. You still have some money left over. You're standing at the store's checkout, having stayed under budget. What a great feeling!",
+      situation:"You came in under budget! What do you do with the extra money?",
+      paStandard:'17.4.3-5.B', tip:"Coming in under budget is a victory. What you do with the savings matters just as much as saving it in the first place.",
+      choices:[
+        {text:"Put the remaining money in your savings account and leave it there",
+         impact:{income:0,expense:0,description:"Saved the surplus"},
+         consequence:"Perfect discipline! That money is now working for you and building your savings habit. Every dollar saved is a dollar toward your future goals."},
+        {text:"Spend it on something fun — you stayed under budget, so this is your reward",
+         impact:{income:0,expense:18,description:"Rewarded yourself with extra"},
+         consequence:"You earned it! Coming under budget and using the difference intentionally is a solid approach. Just make sure the 'reward' was really your choice — not just an impulse."},
+        {text:"Ask your parents to keep it toward next year's school budget",
+         impact:{income:0,expense:0,description:"Contributed to next year"},
+         consequence:"Incredibly mature! You're thinking months ahead. Your parents were genuinely impressed — and next year, you'll start with a head start before they even contribute."}
+      ]
+    }
+  ]
+},
+
+{
+  id:'savings', title:'Saving for Something Big', icon:'🎯',
+  description:'Set a savings goal of $150 and make smart decisions over six weeks to reach it.',
+  startBalance:30, paAreas:'17.4 · 17.1',
+  weeks:[
+    { week:1,
+      narrative:"You really want a new portable speaker — it costs $150 at the store. You currently have $30 saved. With some allowance, chores, and birthday money coming, you think you can reach $150 in 6 weeks if you're disciplined.",
+      situation:"How will you structure your savings plan?",
+      paStandard:'17.4.6-8.B', tip:"A savings plan with a specific goal, timeline, and weekly target is far more effective than 'trying to save' with no structure.",
+      choices:[
+        {text:"Set a weekly savings target: $20/week gets you to $150 in 6 weeks. Write it down.",
+         impact:{income:20,expense:0,description:"Week 1 savings goal met"},
+         consequence:"Goal + plan + action = results. You hit your Week 1 target. A written goal feels more real than a mental one — keep going!"},
+        {text:"Save what you can each week without a specific target",
+         impact:{income:10,expense:0,description:"Saved without a plan"},
+         consequence:"Without a target, you saved less than half of what you needed. Vague intentions lead to vague results. A number makes saving feel real."},
+        {text:"Find extra ways to earn — ask about extra chores or small jobs for neighbors",
+         impact:{income:30,expense:0,description:"Earned extra from chores"},
+         consequence:"Go-getter! You earned $30 in Week 1 by adding extra income sources. You're already 40% of the way to your goal. More income + saving = faster progress."}
+      ]
+    },
+    { week:2,
+      narrative:"Your friend asks if you want to go to an amusement park this Saturday — tickets, food, and the ride home would cost about $40. You haven't been in over a year and it sounds amazing.",
+      situation:"Do you go to the amusement park and spend $40, or protect your savings goal?",
+      paStandard:'17.1.6-8.B', tip:"Opportunity cost means that choosing to spend $40 means giving up $40 toward your goal — and possibly delaying it by two weeks.",
+      choices:[
+        {text:"Skip the park — stay focused on your goal and suggest a free activity with friends instead",
+         impact:{income:20,expense:0,description:"Skipped park, hit savings target"},
+         consequence:"Disciplined! Your friend understood and you all had fun at a park for free. You stayed on track and will reach your goal on time. Delayed gratification is real."},
+        {text:"Go to the park — you only live once and your goal can wait another week",
+         impact:{income:0,expense:40,description:"Fun but set back savings by 2 weeks"},
+         consequence:"You had an amazing day! But you spent $40 you needed for your goal and missed your weekly savings target. Now you need to earn extra to catch up."},
+        {text:"Go but set a hard $20 spending limit — pack snacks, skip expensive food",
+         impact:{income:0,expense:20,description:"Went with a budget cap"},
+         consequence:"Smart compromise! You had fun with friends AND only spent half. You only fell $20 behind your target — very manageable to make up next week."}
+      ]
+    },
+    { week:3,
+      narrative:"You spot your speaker on sale online — it's $120 instead of $150, but only for 48 hours. You currently have $75 saved. You're $45 short. You could borrow $45 from your older sibling.",
+      situation:"The speaker is $30 off but you're $45 short. Do you borrow money to get it now?",
+      paStandard:'17.6.3-5.E', tip:"Borrowing money costs you something — even from family. Make sure you can repay it quickly and understand the terms.",
+      choices:[
+        {text:"Borrow $45 from your sibling, buy it now, and commit to paying them back in 3 weeks",
+         impact:{income:0,expense:120,description:"Bought speaker — saved $30 vs full price"},
+         consequence:"You saved $30 and got your goal item early! But you now owe your sibling $45. Make sure you pay it back on time — debt to family can cause real tension."},
+        {text:"Wait — don't borrow. Keep saving and buy it at full price when ready",
+         impact:{income:25,expense:0,description:"Stayed the course, saved this week"},
+         consequence:"Patience! You avoided debt and kept your savings momentum. You'll pay $30 more for the speaker, but you'll buy it with clean money and owe nothing to anyone."},
+        {text:"Look for the speaker used or refurbished — might already find it under $75",
+         impact:{income:0,expense:70,description:"Found refurbished speaker at $70"},
+         consequence:"Smart research! You found a certified refurbished model for $70 — within your current savings. You reached your goal early and paid $80 less than retail!"}
+      ]
+    },
+    { week:4,
+      narrative:"Your grandparents sent you $25 for your birthday. It arrived right when you needed it most — you're $30 away from your savings goal with two weeks left.",
+      situation:"You got $25 as a gift. What do you do with it?",
+      paStandard:'17.4.3-5.B', tip:"A windfall — money you didn't plan on — is a chance to accelerate a goal. Using it wisely separates strong savers from impulsive spenders.",
+      choices:[
+        {text:"Put the full $25 toward your speaker goal — you're now just $5 away!",
+         impact:{income:25,expense:0,description:"Applied full gift to savings goal"},
+         consequence:"You're $5 away from your goal! That $25 gift did in one moment what two weeks of saving would have done. You'll reach your goal easily this week."},
+        {text:"Split it — $15 to savings and $10 to spend on something you want now",
+         impact:{income:15,expense:10,description:"Split gift — savings + fun"},
+         consequence:"Balanced approach! You moved your goal forward while still treating yourself a little. You're now $15 away — still very reachable with one more week of saving."},
+        {text:"Spend the birthday money on fun — you have other savings for the goal",
+         impact:{income:0,expense:25,description:"Spent birthday money on fun"},
+         consequence:"Totally understandable — it's birthday money! But you missed a chance to reach your goal faster. You'll need two more strong savings weeks to get there."}
+      ]
+    },
+    { week:5,
+      narrative:"You're almost there! But this week, your school is selling fundraiser chocolates and everyone's buying them. They cost $2 each and it's hard to say no when your friends are all buying.",
+      situation:"Your friends are buying $2 chocolates for a school fundraiser. Do you buy any?",
+      paStandard:'17.1.6-8.C', tip:"Small purchases feel harmless but add up. $2 here and $2 there can derail a savings plan faster than one big splurge.",
+      choices:[
+        {text:"Buy just 1 chocolate ($2) — support the cause but stay close to your goal",
+         impact:{income:20,expense:2,description:"One chocolate, still on target"},
+         consequence:"Good judgment! You participated without going overboard. You stayed on your savings target and still felt part of the group. Balance done right."},
+        {text:"Buy 5 chocolates — share with friends and feel good about supporting the school",
+         impact:{income:20,expense:10,description:"Bought 5 chocolates — still on track"},
+         consequence:"Generous! $10 is a meaningful contribution to the fundraiser — and you still have enough to hit your goal this week. Your savings cushion handled it."},
+        {text:"Don't buy any — you're this close to your goal and nothing will stop you",
+         impact:{income:20,expense:0,description:"Skipped — stayed fully on track"},
+         consequence:"Laser focus! You politely declined and your friends understood. Sometimes saying no to small things is what makes the big goal possible."}
+      ]
+    },
+    { week:6,
+      narrative:"Week 6 is here. Check your balance — have you reached $150? Whatever your balance is, this is the end of your 6-week savings challenge. Time to reflect on what worked.",
+      situation:"The challenge is over. What do you take away from this experience?",
+      paStandard:'17.1.6-8.A', tip:"The skills you practiced — goal setting, delayed gratification, tracking progress — are more valuable than the item you were saving for.",
+      choices:[
+        {text:"If you hit your goal: celebrate and immediately set your next savings goal",
+         impact:{income:0,expense:0,description:"Goal achieved — set next target"},
+         consequence:"Champion behavior! Immediately setting a new goal keeps the momentum going. Savers who always have an active goal build wealth steadily over time."},
+        {text:"If you didn't quite make it: identify exactly which week derailed you and learn from it",
+         impact:{income:0,expense:0,description:"Analyzed what went wrong"},
+         consequence:"Self-awareness is priceless. Knowing which decision cost you the most is more valuable than the $150 itself. Next challenge, you'll know exactly where to protect your plan."},
+        {text:"Open a simple savings account to put your money in where it can earn interest",
+         impact:{income:1,expense:0,description:"Money earned interest!"},
+         consequence:"Smart next step! Even a small interest rate means your money grows while you sleep. Your $150 in a savings account earns a little extra every month — automatically."}
+      ]
+    }
+  ]
+},
+
+{
+  id:'emergency', title:'Unexpected Expenses', icon:'⚡',
+  description:'You have $80 in savings. Six unexpected situations test how you handle financial surprises.',
+  startBalance:80, paAreas:'17.5 · 17.4 · 17.3',
+  weeks:[
+    { week:1,
+      narrative:"You've been saving $80 all summer and feeling pretty good about it. Then on Monday morning, you look at your phone and realize the screen is badly cracked from yesterday's drop. It's barely readable. You need your phone for school, communication, and safety.",
+      situation:"Your phone screen is cracked. What do you do?",
+      paStandard:'17.5.6-8.A', tip:"Before paying for repairs, research every option. Prices vary enormously and there may be options you haven't thought of.",
+      choices:[
+        {text:"Get it professionally repaired at a phone repair shop ($40)",
+         impact:{income:0,expense:40,description:"Professional repair — phone like new"},
+         consequence:"Your phone is as good as new! $40 is significant, but it was money well spent on something you rely on daily. Shop around — prices can vary by $20 or more."},
+        {text:"Buy a $10 screen protector to hold it together and wait to repair it later",
+         impact:{income:0,expense:10,description:"Temporary fix — saved $30 for now"},
+         consequence:"Clever short-term fix! The protector holds the crack and buys you time to research repair options or save up. Sometimes waiting lets you make a better decision."},
+        {text:"Check if your parents have a phone protection plan that covers screen repairs",
+         impact:{income:0,expense:0,description:"Covered by protection plan — free!"},
+         consequence:"Smart first call! Your parents had a plan that covered this. Always check insurance or protection plans before paying out of pocket — that's exactly what they're for."}
+      ]
+    },
+    { week:2,
+      narrative:"Your school announces an optional (but really fun) field trip to a science museum next Friday. Cost is $25 and includes the bus and lunch. You want to go, but $25 is a significant portion of what you have left.",
+      situation:"A school trip costs $25. Can you justify it?",
+      paStandard:'17.3.3-5.A', tip:"Educational experiences have value beyond entertainment. But 'optional' means you have a genuine choice — weigh it honestly.",
+      choices:[
+        {text:"Go — educational experiences are worth the $25 and you have enough left",
+         impact:{income:0,expense:25,description:"Attended field trip"},
+         consequence:"Great choice! The museum was amazing and you learned things that connected to class. Experiences are investments in knowledge — and this one was genuinely educational."},
+        {text:"Skip the trip and protect your savings — you can visit the museum another time",
+         impact:{income:0,expense:0,description:"Skipped trip — kept savings"},
+         consequence:"Responsible decision. Your savings are staying intact for things that might matter more. You watched your classmates' photos and added the museum to your future visit list."},
+        {text:"Ask your parent or guardian if they can cover it given that it's school-related",
+         impact:{income:0,expense:0,description:"Parent covered the cost"},
+         consequence:"There's nothing wrong with asking! Educational field trips are something parents often want to support. Being open about your finances with family is healthy."}
+      ]
+    },
+    { week:3,
+      narrative:"You borrowed two library books in September and just found them — stuffed under your bed, three weeks overdue. The library charges $0.25/day per book. That's $10.50 in fines you owe.",
+      situation:"You have $10.50 in overdue library fines. What's your plan?",
+      paStandard:'17.6.3-5.E', tip:"Small fees add up faster than you expect. Overdue fines, late fees, and penalties are 100% avoidable costs that only hurt you.",
+      choices:[
+        {text:"Pay the fine immediately and return the books today",
+         impact:{income:0,expense:11,description:"Paid fine, returned books"},
+         consequence:"Clean slate! Paying obligations quickly prevents them from growing. You also learned a $10 lesson about returning borrowed items on time — worth every penny."},
+        {text:"Ask the librarian if they have a fine forgiveness program for students",
+         impact:{income:0,expense:0,description:"Fine waived through program"},
+         consequence:"Smart ask! Many libraries have programs that forgive fines for students, especially on a first offense, or in exchange for volunteering. You only get answers you ask for."},
+        {text:"Keep the books for now — paying fines later doesn't change the amount much",
+         impact:{income:0,expense:0,description:"Delayed — fines kept growing"},
+         consequence:"Actually, fines keep growing daily! By waiting another week, you owe even more. Delay never helps with fees — they compound just like debt."}
+      ]
+    },
+    { week:4,
+      narrative:"Your close friend's birthday is this weekend. You want to give a real gift, but you're watching your budget carefully. Birthday gifts often cost $20–30 for friends your age.",
+      situation:"It's your friend's birthday. How much do you spend on a gift?",
+      paStandard:'17.3.6-8.A', tip:"Meaningful gifts don't have to be expensive. Thoughtfulness and creativity often matter more than price to people who care about you.",
+      choices:[
+        {text:"Make a personalized gift (a playlist, a photo collage, a handwritten note) — cost $3 for materials",
+         impact:{income:0,expense:3,description:"Gave a thoughtful personal gift"},
+         consequence:"Your friend was genuinely touched. The personal effort meant more than something bought off a shelf. Thoughtfulness is free — creativity is priceless."},
+        {text:"Buy a $20 gift card — simple, flexible, and appropriate",
+         impact:{income:0,expense:20,description:"Bought $20 gift card"},
+         consequence:"A solid, reliable choice. Your friend appreciated the flexibility. $20 is a fair and respectful gift for a close friend — and you stayed within a reasonable budget."},
+        {text:"Organize the whole friend group to split a bigger gift — you each chip in $8",
+         impact:{income:0,expense:8,description:"Split gift with group — $8 share"},
+         consequence:"Brilliant! Group gifting means your friend gets something bigger and better, everyone spends less, and the social experience of organizing it is fun too."}
+      ]
+    },
+    { week:5,
+      narrative:"While scrolling online, you see a huge sale on wireless earbuds — normally $70, now $35 for the next 4 hours only. You've wanted these for months and the deal is real. But your savings have taken some hits.",
+      situation:"A great deal on something you've wanted. Do you buy them?",
+      paStandard:'17.3.6-8.A', tip:"Time pressure is a sales tactic. A great deal on something you don't need is still money you didn't plan to spend. Ask: is this a want or a need right now?",
+      choices:[
+        {text:"Pass — your savings have been hit by real expenses and $35 is too much right now",
+         impact:{income:0,expense:0,description:"Resisted the deal"},
+         consequence:"Real discipline under real pressure! The deal was genuine but your financial situation said no. There will always be another sale. Your savings won't wait if something urgent hits."},
+        {text:"Buy them — $35 for $70 earbuds is a real deal and you've wanted them for months",
+         impact:{income:0,expense:35,description:"Bought earbuds on sale"},
+         consequence:"You scored a good deal on something you genuinely wanted. Just note: this was a want, not a need. Make sure your savings can still handle a real emergency."},
+        {text:"Wait 24 hours before deciding — if the deal is gone, it wasn't meant to be",
+         impact:{income:0,expense:0,description:"Waited — decided with a clear head"},
+         consequence:"The 24-hour rule is one of the best personal finance habits. The sale did end — but you made the decision with clarity, not urgency. That's worth more than earbuds."}
+      ]
+    },
+    { week:6,
+      narrative:"Six weeks of surprise expenses are behind you. Check your balance — how did you do? Some hits were unavoidable, some were choices. Reviewing your decisions is the last — and most important — step.",
+      situation:"The six weeks are over. What's your biggest financial takeaway?",
+      paStandard:'17.5.6-8.B', tip:"An emergency fund isn't about having extra money — it's about having calm when things go wrong. That calm lets you make better decisions.",
+      choices:[
+        {text:"Commit to rebuilding your savings back above $80 before spending on wants",
+         impact:{income:0,expense:0,description:"Set recovery savings goal"},
+         consequence:"Exactly right! Rebuilding your emergency fund is priority one after it gets used. An empty savings account leaves you vulnerable to the next surprise — and there's always a next one."},
+        {text:"Start tracking every expense going forward in a notebook or phone note",
+         impact:{income:0,expense:0,description:"Started expense tracking habit"},
+         consequence:"Game-changer habit! Most people are shocked when they see where their money actually goes. Tracking turns invisible spending into visible choices you can control."},
+        {text:"Talk to a trusted adult about how they handle unexpected expenses in their own life",
+         impact:{income:0,expense:0,description:"Learned from experienced adult"},
+         consequence:"Wisdom is a resource! Every experienced adult has stories of surprise expenses. Learning how they handled it — good and bad — is free financial education from the real world."}
+      ]
+    }
+  ]
+}
+];
+
+const DIFFICULTIES = [
+  {id:'beginner', label:'Just Starting Out', grade:'Grades 3–5', badge:'badge-green', desc:'Basic money concepts and simple decisions'},
+  {id:'intermediate', label:'Getting the Hang of It', grade:'Grades 6–8', badge:'badge-amber', desc:'Income, expenses, budgeting and tradeoffs'},
+  {id:'pro', label:'Money Pro', grade:'Grades 9–12', badge:'badge-coral', desc:'Opportunity cost, credit, risk and planning'},
+];
+
+/* ===================================================================== */
+
+function App() {
+  const [screen, setScreen] = useState('welcome');
+  const [name, setName] = useState('');
+  const [difficulty, setDifficulty] = useState(null);
+  const [scenario, setScenario] = useState(null);
+  const [weekIndex, setWeekIndex] = useState(0);
+  const [gameState, setGameState] = useState({balance:0, totalIncome:0, totalExpenses:0, ledger:[]});
+  const [result, setResult] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [activeTab, setActiveTab] = useState('scenario');
+  const [showResult, setShowResult] = useState(false);
+
+  const startScenario = (sc) => {
+    setScenario(sc);
+    setWeekIndex(0);
+    setResult(null);
+    setShowResult(false);
+    setHistory([]);
+    setActiveTab('scenario');
+    setGameState({
+      balance: sc.startBalance,
+      totalIncome: 0,
+      totalExpenses: 0,
+      ledger: [{week:'Start', description:'Starting balance', income: sc.startBalance, expense:0, balance:sc.startBalance}]
+    });
+    setScreen('game');
+  };
+
+  const makeChoice = (choice) => {
+    const {income, expense, description} = choice.impact;
+    const newBal = gameState.balance + income - expense;
+    const currentWeek = scenario.weeks[weekIndex];
+    const newLedger = [...gameState.ledger, {
+      week: `Week ${currentWeek.week}`,
+      description,
+      income,
+      expense,
+      balance: newBal
+    }];
+    const newHist = [...history, {week: currentWeek.week, choice: choice.text, consequence: choice.consequence}];
+    setGameState({
+      balance: newBal,
+      totalIncome: gameState.totalIncome + income,
+      totalExpenses: gameState.totalExpenses + expense,
+      ledger: newLedger
+    });
+    setHistory(newHist);
+    setResult({...choice, balanceAfter: newBal});
+    setShowResult(true);
+  };
+
+  const nextWeek = () => {
+    if (weekIndex + 1 >= scenario.weeks.length) {
+      setScreen('summary');
+    } else {
+      setWeekIndex(weekIndex + 1);
+      setResult(null);
+      setShowResult(false);
+    }
+  };
+
+  const pct = scenario ? Math.round((weekIndex / scenario.weeks.length) * 100) : 0;
+  const currentWeek = scenario ? scenario.weeks[weekIndex] : null;
+  const diff = DIFFICULTIES.find(d => d.id === difficulty);
+
+  /* WELCOME */
+  if (screen === 'welcome') return (
+    <div className="screen">
+      <div className="app-logo">PA Financial Literacy · Standards 17.1–17.6</div>
+      <div className="hero-title">Money Moves</div>
+      <div className="hero-sub">Work through real-life money scenarios and build financial skills that last a lifetime.</div>
+      <div style={{display:'flex',gap:12,marginBottom:28,maxWidth:400}}>
+        <input type="text" placeholder="Enter your name to begin..." value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>e.key==='Enter'&&name.trim()&&setScreen('difficulty')} />
+        <button className="btn btn-primary" onClick={()=>name.trim()&&setScreen('difficulty')} disabled={!name.trim()} style={{whiteSpace:'nowrap'}}>Let's go →</button>
+      </div>
+      <div className="feature-grid">
+        {[['🍋','Earn money','Run a real business'],['💡','Make decisions','Face real tradeoffs'],['📊','Track it all','Built-in budget sheet']].map(([icon,title,sub])=>(
+          <div key={title} className="feature-item">
+            <div className="feature-icon">{icon}</div>
+            <div style={{fontWeight:700,fontSize:13,marginBottom:3}}>{title}</div>
+            <div className="feature-label">{sub}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{marginTop:24,fontSize:12,color:'#999'}}>Aligned to PA Academic Standards for Personal Finance · Effective July 1, 2026</div>
+    </div>
+  );
+
+  /* DIFFICULTY */
+  if (screen === 'difficulty') return (
+    <div className="screen">
+      <button className="back-btn" onClick={()=>setScreen('welcome')}>← Back</button>
+      <div className="hero-title" style={{marginTop:16,marginBottom:6}}>Hi, {name}! Pick your level</div>
+      <div className="hero-sub">Don't worry — you can always challenge yourself with a harder level later.</div>
+      <div className="card-grid-3" style={{marginBottom:24}}>
+        {DIFFICULTIES.map(d=>(
+          <div key={d.id} className={`card selectable${difficulty===d.id?' selected':''}`} onClick={()=>setDifficulty(d.id)}>
+            <span className={`badge ${d.badge}`}>{d.grade}</span>
+            <div style={{fontWeight:700,fontSize:15,marginBottom:5}}>{d.label}</div>
+            <div style={{fontSize:13,color:'#666'}}>{d.desc}</div>
+          </div>
+        ))}
+      </div>
+      <button className="btn btn-primary" onClick={()=>difficulty&&setScreen('scenarios')} disabled={!difficulty}>Choose a scenario →</button>
+    </div>
+  );
+
+  /* SCENARIOS */
+  if (screen === 'scenarios') return (
+    <div className="screen">
+      <button className="back-btn" onClick={()=>setScreen('difficulty')}>← Back</button>
+      <div className="hero-title" style={{marginTop:16,marginBottom:6}}>Choose a scenario</div>
+      <div className="hero-sub" style={{marginBottom:20}}>Each one puts you in a real money situation. Pick one and see what you'd do.</div>
+      <div className="scenario-grid">
+        {SCENARIOS.map(s=>(
+          <div key={s.id} className="scenario-card" onClick={()=>startScenario(s)}>
+            <span className="scenario-icon">{s.icon}</span>
+            <div className="scenario-title">{s.title}</div>
+            <div className="scenario-desc">{s.description}</div>
+            <div className="scenario-tag">PA Standards: {s.paAreas}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  /* GAME */
+  if (screen === 'game' && currentWeek) return (
+    <div className="screen">
+      <div className="nav-row">
+        <button className="back-btn" onClick={()=>setScreen('scenarios')}>← Scenarios</button>
+        <span style={{flex:1}}/>
+        <span style={{fontSize:13,color:'#888',fontWeight:600}}>{name} · {diff?.label}</span>
+      </div>
+      <div style={{fontSize:18,fontWeight:700,marginBottom:12}}>{scenario.icon} {scenario.title}</div>
+      <div className="progress-wrap">
+        <div className="progress-label"><span>Progress</span><span>Week {currentWeek.week} of {scenario.weeks.length}</span></div>
+        <div className="progress-track"><div className="progress-fill" style={{width:`${pct}%`}}/></div>
+      </div>
+      <div className="tab-bar">
+        <button className={`tab-btn${activeTab==='scenario'?' active':''}`} onClick={()=>setActiveTab('scenario')}>📖 Scenario</button>
+        <button className={`tab-btn${activeTab==='budget'?' active':''}`} onClick={()=>setActiveTab('budget')}>📊 Budget Tracker</button>
+      </div>
+
+      {activeTab==='scenario' && (
+        <div className="game-wrap">
+          <div className="game-main">
+            {!showResult ? (
+              <div className="card">
+                <div className="week-pill">Week {currentWeek.week}</div>
+                <div className="narrative-text">{currentWeek.narrative}</div>
+                <div className="situation-box">{currentWeek.situation}</div>
+                <div className="choices">
+                  {currentWeek.choices.map((c,i)=>(
+                    <button key={i} className="choice-btn" onClick={()=>makeChoice(c)}>
+                      <div className="choice-row">
+                        <span className="choice-letter">{['A','B','C'][i]}</span>
+                        <span style={{flex:1}}>{c.text}</span>
+                      </div>
+                      <div className="choice-impact">
+                        {c.impact.income>0 && <span className="impact-earn">+${c.impact.income.toFixed(2)} income</span>}
+                        {c.impact.expense>0 && <span className="impact-spend"> −${c.impact.expense.toFixed(2)} expense</span>}
+                        {c.impact.income===0&&c.impact.expense===0 && <span>No immediate cost</span>}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                <div className="std-label">PA Standard: {currentWeek.paStandard}</div>
+              </div>
+            ) : (
+              <div className="card">
+                <div className="week-pill">Week {currentWeek.week} — Result</div>
+                <div className="result-banner">
+                  <strong>You chose:</strong>
+                  {result.text}
+                </div>
+                <div style={{fontSize:15,lineHeight:1.75,color:'#1a1a1a',marginBottom:16}}>{result.consequence}</div>
+                <div style={{background:'#f5f7f2',borderRadius:8,padding:'12px 14px',marginBottom:16,fontSize:14}}>
+                  {result.impact.income>0&&<div style={{color:'#27500A',fontWeight:600,marginBottom:4}}>💰 +${result.impact.income.toFixed(2)} earned</div>}
+                  {result.impact.expense>0&&<div style={{color:'#cc3300',fontWeight:600,marginBottom:4}}>💸 −${result.impact.expense.toFixed(2)} spent</div>}
+                  <div style={{fontWeight:700}}>New balance: ${result.balanceAfter.toFixed(2)}</div>
+                </div>
+                <button className="btn btn-primary" onClick={nextWeek}>
+                  {weekIndex+1 >= scenario.weeks.length ? 'See my results →' : 'Next week →'}
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="game-sidebar">
+            <div className="stat-card">
+              <div className="stat-label">Balance</div>
+              <div className={`stat-value ${gameState.balance>=scenario.startBalance?'val-green':'val-red'}`}>${gameState.balance.toFixed(2)}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Earned</div>
+              <div className="stat-value val-green">+${gameState.totalIncome.toFixed(2)}</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Spent</div>
+              <div className="stat-value val-red">−${gameState.totalExpenses.toFixed(2)}</div>
+            </div>
+            <div className="tip-card">
+              <div className="tip-head">💡 Money tip</div>
+              <div className="tip-text">{currentWeek.tip}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab==='budget' && (
+        <div className="card">
+          <div style={{fontWeight:700,fontSize:16,marginBottom:4}}>Your Budget Ledger</div>
+          <div style={{fontSize:13,color:'#666',marginBottom:14}}>Auto-updated as you make decisions. This is your financial record for the {scenario.title} scenario.</div>
+          <div className="sheet-wrap">
+            <table className="sheet-table">
+              <thead><tr><th>Period</th><th>Description</th><th>Income</th><th>Expense</th><th>Balance</th></tr></thead>
+              <tbody>
+                {gameState.ledger.map((row,i)=>(
+                  <tr key={i}>
+                    <td><span className="wk-label">{row.week}</span></td>
+                    <td>{row.description}</td>
+                    <td className="cell-earn">{row.income>0?`$${row.income.toFixed(2)}`:''}</td>
+                    <td className="cell-spend">{row.expense>0?`$${row.expense.toFixed(2)}`:''}</td>
+                    <td className={row.balance>=0?'cell-bal-pos':'cell-bal-neg'}>${row.balance.toFixed(2)}</td>
+                  </tr>
+                ))}
+                {gameState.ledger.length > 1 && (
+                  <tr className="total-row">
+                    <td colSpan={2}>Totals</td>
+                    <td className="cell-earn">${gameState.totalIncome.toFixed(2)}</td>
+                    <td className="cell-spend">${gameState.totalExpenses.toFixed(2)}</td>
+                    <td className={gameState.balance>=0?'cell-bal-pos':'cell-bal-neg'}>${gameState.balance.toFixed(2)}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <div className="sheet-tip">Net change from starting ${scenario.startBalance.toFixed(2)}: <span className={`net-box ${gameState.balance-scenario.startBalance>=0?'net-pos':'net-neg'}`}>{gameState.balance-scenario.startBalance>=0?'+':''}{(gameState.balance-scenario.startBalance).toFixed(2)}</span></div>
+        </div>
+      )}
+    </div>
+  );
+
+  /* SUMMARY */
+  if (screen === 'summary') return (
+    <div className="screen">
+      <div style={{fontSize:28,fontWeight:700,marginBottom:6}}>Scenario Complete! 🎉</div>
+      <div style={{fontSize:16,color:'#666',marginBottom:16}}>{scenario.icon} {scenario.title} · {diff?.label}</div>
+      <div className={`outcome-msg${gameState.balance<scenario.startBalance?' loss':''}`}>
+        {gameState.balance >= scenario.startBalance
+          ? `Great work, ${name}! You finished with $${gameState.balance.toFixed(2)} — that's $${(gameState.balance-scenario.startBalance).toFixed(2)} more than you started with.`
+          : `You finished with $${gameState.balance.toFixed(2)}, which is $${(scenario.startBalance-gameState.balance).toFixed(2)} less than you started with. That's okay — every decision taught you something. Try again with different choices!`
+        }
+      </div>
+      <div className="summary-grid">
+        <div className="summary-stat">
+          <div style={{fontSize:11,fontWeight:700,textTransform:'uppercase',letterSpacing:'.06em',color:'#888'}}>Final Balance</div>
+          <div className={`summary-num ${gameState.balance>=scenario.startBalance?'val-green':'val-red'}`}>${gameState.balance.toFixed(2)}</div>
+        </div>
+        <div className="summary-stat">
+          <div style={{fontSize:11,fontWeight:700,textTransform:'uppercase',letterSpacing:'.06em',color:'#888'}}>Total Earned</div>
+          <div className="summary-num val-green">+${gameState.totalIncome.toFixed(2)}</div>
+        </div>
+        <div className="summary-stat">
+          <div style={{fontSize:11,fontWeight:700,textTransform:'uppercase',letterSpacing:'.06em',color:'#888'}}>Total Spent</div>
+          <div className="summary-num val-red">−${gameState.totalExpenses.toFixed(2)}</div>
+        </div>
+      </div>
+      <div className="card" style={{marginBottom:20}}>
+        <div style={{fontWeight:700,fontSize:15,marginBottom:12}}>Your Decisions This Round</div>
+        <div className="history-list">
+          {history.map((h,i)=>(
+            <div key={i} className="history-item">
+              <span className="history-wk">Week {h.week}</span>
+              <span className="history-choice">{h.choice}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="action-row">
+        <button className="btn btn-primary" onClick={()=>startScenario(scenario)}>Play again</button>
+        <button className="btn btn-secondary" onClick={()=>setScreen('scenarios')}>Try another scenario</button>
+        <button className="btn btn-secondary" onClick={()=>setScreen('difficulty')}>Change level</button>
+      </div>
+    </div>
+  );
+
+  return null;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
